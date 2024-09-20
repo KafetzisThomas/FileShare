@@ -16,7 +16,7 @@ class FileTransferConsumer(WebsocketConsumer):
         Update the list of connected peers.
         """
         # Generate a unique ID for the connected user
-        self.user_id = str(uuid.uuid4())
+        self.user_id = str(uuid.uuid4())[:10]
         self.room_group_name = "global"
 
         # Add the user to the WebSocket group
