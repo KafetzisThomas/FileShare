@@ -26,6 +26,16 @@ class FileTransferConsumer(WebsocketConsumer):
 
         self.accept()
 
+        # Send the unique ID back to the user
+        self.send(
+            text_data=json.dumps(
+                {
+                    "type": "user_id",
+                    "user_id": self.user_id,
+                }
+            )
+        )
+
         # Update the list of connected peers
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,

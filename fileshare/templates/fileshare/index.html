@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>FileShare</h1>
+    <p>Your Unique ID: <span id="myUserId"></span></p>
 
     <form id="form">
         <label for="fileInput">Choose a file:</label>
@@ -34,6 +35,11 @@
         // Handle incoming files
         socket.onmessage = function(e){
             let data = JSON.parse(e.data);
+
+            // Update the user's unique ID on the page
+            if(data.type === 'user_id'){
+                document.getElementById('myUserId').innerHTML = data.user_id;
+            }
 
             if(data.type === 'user_connected'){
                 addUserOption(data.user_id);  // Add user to the selection dropdown
