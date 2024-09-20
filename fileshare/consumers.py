@@ -1,16 +1,17 @@
 import json
 import uuid
-from channels.generic.websocket import WebsocketConsumer
-from asgiref.sync import async_to_sync
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 
-class FileTransferConsumer(WebsocketConsumer):
+class FileTransferConsumer(AsyncWebsocketConsumer):
     """
     A WebSocket consumer that handles file transfers between users,
     based on unique identifiers.
     """
 
-    def connect(self):
+    connected_users = set()  # Track all connected users
+
+    async def connect(self):
         """
         Assign a unique ID to the connected user.
         Update the list of connected peers.
@@ -20,14 +21,15 @@ class FileTransferConsumer(WebsocketConsumer):
         self.room_group_name = "global"
 
         # Add the user to the WebSocket group
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name, self.channel_name
-        )
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
-        self.accept()
+        await self.accept()
 
-        # Send the unique ID back to the user
-        self.send(
+        # Add the user to the set of connected users
+        self.connected_users.add(self.user_id)
+
+        # Send the unique ID back to the user for display
+        await self.send(
             text_data=json.dumps(
                 {
                     "type": "user_id",
@@ -36,8 +38,21 @@ class FileTransferConsumer(WebsocketConsumer):
             )
         )
 
+        # Send the list of already connected users,
+        # to the new user (excluding themselves)
+        await self.send(
+            text_data=json.dumps(
+                {
+                    "type": "connected_users",
+                    "users": list(
+                        self.connected_users - {self.user_id}
+                    ),  # Exclude the current user
+                }
+            )
+        )
+
         # Update the list of connected peers
-        async_to_sync(self.channel_layer.group_send)(
+        await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "user_connected",
@@ -45,17 +60,18 @@ class FileTransferConsumer(WebsocketConsumer):
             },
         )
 
-    def disconnect(self, close_code):
+    async def disconnect(self, close_code):
         """
         Remove the user from the group when they disconnect.
         Update the list of connected peers.
         """
-        async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name, self.channel_name
-        )
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+
+        # Remove the user from the connected users set
+        self.connected_users.discard(self.user_id)
 
         # Update the list of connected peers
-        async_to_sync(self.channel_layer.group_send)(
+        await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "user_disconnected",
@@ -63,7 +79,7 @@ class FileTransferConsumer(WebsocketConsumer):
             },
         )
 
-    def receive(self, text_data):
+    async def receive(self, text_data):
         """
         Handle incoming files from specific users based on user_id.
         """
@@ -78,7 +94,7 @@ class FileTransferConsumer(WebsocketConsumer):
 
             # Send the file only to the specific user,
             # based on their user_id
-            self.send_to_user(
+            await self.send_to_user(
                 target_user_id,
                 {
                     "type": "file_offer",
@@ -88,11 +104,11 @@ class FileTransferConsumer(WebsocketConsumer):
                 },
             )
 
-    def send_to_user(self, target_user_id, file_data):
+    async def send_to_user(self, target_user_id, file_data):
         """
         Send a file to a specific user identified by their user_id.
         """
-        async_to_sync(self.channel_layer.group_send)(
+        await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "send_file",
@@ -101,7 +117,7 @@ class FileTransferConsumer(WebsocketConsumer):
             },
         )
 
-    def send_file(self, event):
+    async def send_file(self, event):
         """
         Send the file to the specific target user.
         """
@@ -109,13 +125,13 @@ class FileTransferConsumer(WebsocketConsumer):
         target_user_id = event["target_user_id"]
 
         if self.user_id == target_user_id:
-            self.send(text_data=json.dumps(file_data))
+            await self.send(text_data=json.dumps(file_data))
 
-    def user_connected(self, event):
+    async def user_connected(self, event):
         """
         Update the list of connected peers when a user joins.
         """
-        self.send(
+        await self.send(
             text_data=json.dumps(
                 {
                     "type": "user_connected",
@@ -124,11 +140,11 @@ class FileTransferConsumer(WebsocketConsumer):
             )
         )
 
-    def user_disconnected(self, event):
+    async def user_disconnected(self, event):
         """
         Update the list of connected peers when a user leaves.
         """
-        self.send(
+        await self.send(
             text_data=json.dumps(
                 {
                     "type": "user_disconnected",
