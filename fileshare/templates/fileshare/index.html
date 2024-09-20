@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileShare</title>
+</head>
+<body>
+    <h1>FileShare</h1>
+
+    <form id="form">
+        <label for="fileInput">Choose a file:</label>
+        <input type="file" id="fileInput" name="file"/>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        const socket = new WebSocket(`ws://${window.location.host}/ws/socket-server/`);
+
+        socket.onopen = function (e) {
+            console.log("WebSocket connection established.");
+        };
+
+        socket.onclose = function (e) {
+            console.log("WebSocket connection closed.");
+        };
+
+        // Handle incoming messages (file offers)
+        socket.onmessage = function(e){
+            // Handle file offers
+            let data = JSON.parse(e.data);
+            let fileName = data.file_name;
+            let fileData = data.file;
+
+            // Ask the user if they want to download the file
+            let agree = confirm(`User is sending a file: ${fileName}. Do you want to download it?`);
+
+            if(agree){
+                downloadFile(fileName, fileData)
+            }
+        }
+
+        // Handle form submission (sending files)
+        let form = document.getElementById('form');
+        form.addEventListener('submit', (e)=> {
+            e.preventDefault();  // Prevent it from doing a normal submission
+
+            // Check if a file is selected
+            let fileInput = document.getElementById('fileInput')
+            let file = fileInput.files[0];
+            let reader = new FileReader();
+            
+            reader.onload = function(event) {
+                let fileData = event.target.result.split(',')[1];  // Extract base64 part
+
+                // Send file data via WebSocket
+                socket.send(JSON.stringify({
+                    'file_name': file.name,
+                    'file': fileData
+                }));
+            }
+            reader.readAsDataURL(file);  // Convert to base64
+            form.reset();
+        })
+
+        function downloadFile(fileName, fileData) {
+            // Creates an invisible link, sets its href to the base64-encoded file data,
+            // and triggers a download with the specified filename. The browser automatically
+            // decodes the base64 string back into the original binary file upon download.
+            let link = document.createElement('a');
+            link.href = 'data:application/octet-stream;base64,' + fileData;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
