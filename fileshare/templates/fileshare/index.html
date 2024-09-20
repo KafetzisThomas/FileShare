@@ -11,11 +11,17 @@
     <form id="form">
         <label for="fileInput">Choose a file:</label>
         <input type="file" id="fileInput" name="file"/>
+        <br>
+        <label for="userSelect">Send file to:</label>
+        <select id="userSelect">
+            <!-- User options will be populated here -->
+        </select>
         <button type="submit">Send</button>
     </form>
 
     <script>
-        const socket = new WebSocket(`ws://${window.location.host}/ws/socket-server/`);
+        const socket = new WebSocket(`ws://${window.location.host}/ws/socket-server/`)
+        let myUserId = null;
 
         socket.onopen = function (e) {
             console.log("WebSocket connection established.");
@@ -25,43 +31,69 @@
             console.log("WebSocket connection closed.");
         };
 
-        // Handle incoming messages (file offers)
+        // Handle incoming files
         socket.onmessage = function(e){
-            // Handle file offers
             let data = JSON.parse(e.data);
-            let fileName = data.file_name;
-            let fileData = data.file;
 
-            // Ask the user if they want to download the file
-            let agree = confirm(`User is sending a file: ${fileName}. Do you want to download it?`);
-
-            if(agree){
-                downloadFile(fileName, fileData)
+            if(data.type === 'user_connected'){
+                addUserOption(data.user_id);  // Add user to the selection dropdown
             }
-        }
 
-        // Handle form submission (sending files)
+            if(data.type === 'user_disconnected'){
+                removeUserOption(data.user_id);  // Remove disconnected user
+            }
+
+            // Handle form submission (sending files)
+            if(data.type === 'file_offer'){
+                let agree = confirm(`User ${data.sender_id} is sending a file: ${data.file_name}. Do you want to download it?`);
+                if(agree){
+                    downloadFile(data.file_name, data.file);
+                }
+            }
+        };
+
         let form = document.getElementById('form');
-        form.addEventListener('submit', (e)=> {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();  // Prevent it from doing a normal submission
 
-            // Check if a file is selected
-            let fileInput = document.getElementById('fileInput')
+            let fileInput = document.getElementById('fileInput');
             let file = fileInput.files[0];
+            let targetUserId = document.getElementById('userSelect').value;
+
             let reader = new FileReader();
-            
             reader.onload = function(event) {
                 let fileData = event.target.result.split(',')[1];  // Extract base64 part
 
-                // Send file data via WebSocket
+                // Send the file data to the selected user via WebSocket
                 socket.send(JSON.stringify({
                     'file_name': file.name,
-                    'file': fileData
+                    'file': fileData,
+                    'target_user_id': targetUserId
                 }));
-            }
+            };
             reader.readAsDataURL(file);  // Convert to base64
             form.reset();
-        })
+        });
+
+        function addUserOption(userId) {
+            let userSelect = document.getElementById('userSelect');
+            let option = document.createElement('option');
+            option.value = userId;
+            option.text = `User: ${userId}`;
+            userSelect.appendChild(option);
+        }
+
+        function removeUserOption(userId) {
+            let userSelect = document.getElementById('userSelect');
+            let options = userSelect.options;
+
+            for(let i = 0; i < options.length; i++) {
+                if(options[i].value === userId) {
+                    userSelect.remove(i);
+                    break;
+                }
+            }
+        }
 
         function downloadFile(fileName, fileData) {
             // Creates an invisible link, sets its href to the base64-encoded file data,
