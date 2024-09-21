@@ -1,6 +1,14 @@
+import os
 import json
 import uuid
 from channels.generic.websocket import AsyncWebsocketConsumer
+from cryptography.fernet import Fernet
+from dotenv import load_dotenv
+
+load_dotenv()
+
+key = os.getenv("ENCRYPTION_KEY")
+fernet = Fernet(key)
 
 
 class FileTransferConsumer(AsyncWebsocketConsumer):
@@ -92,6 +100,15 @@ class FileTransferConsumer(AsyncWebsocketConsumer):
             file_name = data["file_name"]
             file_content = data["file"]
 
+            # NOTE: FOR DEVELOPMENT ONLY !!!
+            # print("Original: ", file_content[:10])
+
+            # Encrypt the byte-encoded file content
+            encrypted_content = fernet.encrypt(file_content.encode()).decode()
+
+            # NOTE: FOR DEVELOPMENT ONLY !!!
+            # print("Encrypted: ", encrypted_content[:10])
+
             # Send the file only to the specific user,
             # based on their user_id
             await self.send_to_user(
@@ -99,7 +116,7 @@ class FileTransferConsumer(AsyncWebsocketConsumer):
                 {
                     "type": "file_offer",
                     "file_name": file_name,
-                    "file": file_content,
+                    "file": encrypted_content,
                     "sender_id": self.user_id,
                 },
             )
@@ -125,7 +142,25 @@ class FileTransferConsumer(AsyncWebsocketConsumer):
         target_user_id = event["target_user_id"]
 
         if self.user_id == target_user_id:
-            await self.send(text_data=json.dumps(file_data))
+            encrypted_file_content = file_data["file"]
+
+            # Decrypt the file content from encrypted base64,
+            # to original byte-encoded string
+            decrypted_content = fernet.decrypt(encrypted_file_content.encode()).decode()
+
+            # NOTE: FOR DEVELOPMENT ONLY !!!
+            # print("Decrypted: ", decrypted_content[:10])
+
+            await self.send(
+                text_data=json.dumps(
+                    {
+                        "type": "file_offer",
+                        "file_name": file_data["file_name"],
+                        "file": decrypted_content,
+                        "sender_id": file_data["sender_id"],
+                    }
+                )
+            )
 
     async def user_connected(self, event):
         """

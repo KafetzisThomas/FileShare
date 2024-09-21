@@ -57,6 +57,9 @@ form.addEventListener('submit', (e) => {
     reader.onload = function (event) {
         let fileData = event.target.result.split(',')[1];  // Extract base64 part
 
+        // FOR DEVELOPMENT ONLY !!!
+        // console.log("Encoded: " + fileData.substring(0, 10));
+
         // Send the file data to the selected user via WebSocket
         socket.send(JSON.stringify({
             'file_name': file.name,
@@ -98,4 +101,7 @@ function downloadFile(fileName, fileData) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    // FOR DEVELOPMENT ONLY !!!
+    // console.log("Decoded: " + link.download.substring(0, 10));
 }
