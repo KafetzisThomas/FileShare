@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # My apps
     "fileshare",
     # Third-Party apps
+    "django_bootstrap5",
     "channels",
     "daphne",
     # Default django apps

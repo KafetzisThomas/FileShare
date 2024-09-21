@@ -1,0 +1,19 @@
+/* Google font - Inria Sans */
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+body {
+  padding-top: 60px;
+  font-family: 'Inria Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Form styles */
+.form-section {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
