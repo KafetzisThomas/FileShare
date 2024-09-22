@@ -1,0 +1,36 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Schedule to run every Monday at 00:00 UTC
+    - cron: '0 0 * * 1'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      DEBUG: 'True'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests for fileshare app
+        run: |
+          python3 manage.py test fileshare.tests
