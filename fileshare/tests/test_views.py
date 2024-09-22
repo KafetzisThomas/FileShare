@@ -1,7 +1,3 @@
-"""
-This module contains test cases for the index view.
-"""
-
 from django.test import TestCase
 from django.urls import reverse
 
