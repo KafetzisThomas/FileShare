@@ -91,6 +91,20 @@ Now you can access the website at `http://127.0.0.1:8000/` or `http://localhost:
 $ python3 manage.py test fileshare.tests
 ```
 
+## Demo Image
+
+![Screenshot 2024-09-23 112921](https://github.com/user-attachments/assets/84cc69ad-6f52-4a5e-8a52-3b392e46925f)
+
+## Demo Videos
+
+### User 1
+
+https://github.com/user-attachments/assets/608b68d8-2a38-409d-b2f3-6f0ac4fdabca
+
+### User 2
+
+https://github.com/user-attachments/assets/194f07a2-dd38-43a7-a418-e481e50332ce
+
 ## Contributing Guidelines for FileShare
 
 ### Pull Requests
