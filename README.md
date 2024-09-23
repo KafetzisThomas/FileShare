@@ -82,7 +82,7 @@ $ python3 manage.py migrate
 $ python3 manage.py runserver
 ```
 
-Now you can access the website at `http://127.0.0.1:8000/` or `http://localhost:8000/`.
+Now you can access the website at `http://127.0.0.1:8000/` or `http://localhost:8000/`. Open two browser windows to transfer files between users.
 
 ## Run Tests
 
