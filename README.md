@@ -93,17 +93,17 @@ $ python3 manage.py test fileshare.tests
 
 ## Demo Image
 
-![Screenshot 2024-09-23 112921](https://github.com/user-attachments/assets/84cc69ad-6f52-4a5e-8a52-3b392e46925f)
+![fileshare](https://github.com/user-attachments/assets/df026073-42c8-43f9-92ce-b57b0e9a01b6)
 
 ## Demo Videos
 
 ### User 1
 
-https://github.com/user-attachments/assets/608b68d8-2a38-409d-b2f3-6f0ac4fdabca
+https://github.com/user-attachments/assets/10552c38-0d08-4040-9fb5-e9093528b5ef
 
 ### User 2
 
-https://github.com/user-attachments/assets/194f07a2-dd38-43a7-a418-e481e50332ce
+https://github.com/user-attachments/assets/f07322d1-35b1-4569-b496-c61578b32e1b
 
 ## Contributing Guidelines for FileShare
 

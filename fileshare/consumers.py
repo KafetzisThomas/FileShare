@@ -17,12 +17,9 @@ class FileTransferConsumer(AsyncWebsocketConsumer):
     based on unique identifiers.
     """
 
-    connected_users = set()  # Track all connected users
-
     async def connect(self):
         """
         Assign a unique ID to the connected user.
-        Update the list of connected peers.
         """
         # Generate a unique ID for the connected user
         self.user_id = str(uuid.uuid4())[:10]
@@ -32,9 +29,6 @@ class FileTransferConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
         await self.accept()
-
-        # Add the user to the set of connected users
-        self.connected_users.add(self.user_id)
 
         # Send the unique ID back to the user for display
         await self.send(
@@ -46,46 +40,11 @@ class FileTransferConsumer(AsyncWebsocketConsumer):
             )
         )
 
-        # Send the list of already connected users,
-        # to the new user (excluding themselves)
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "type": "connected_users",
-                    "users": list(
-                        self.connected_users - {self.user_id}
-                    ),  # Exclude the current user
-                }
-            )
-        )
-
-        # Update the list of connected peers
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                "type": "user_connected",
-                "user_id": self.user_id,
-            },
-        )
-
     async def disconnect(self, close_code):
         """
         Remove the user from the group when they disconnect.
-        Update the list of connected peers.
         """
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
-
-        # Remove the user from the connected users set
-        self.connected_users.discard(self.user_id)
-
-        # Update the list of connected peers
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                "type": "user_disconnected",
-                "user_id": self.user_id,
-            },
-        )
 
     async def receive(self, text_data):
         """
@@ -161,29 +120,3 @@ class FileTransferConsumer(AsyncWebsocketConsumer):
                     }
                 )
             )
-
-    async def user_connected(self, event):
-        """
-        Update the list of connected peers when a user joins.
-        """
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "type": "user_connected",
-                    "user_id": event["user_id"],
-                }
-            )
-        )
-
-    async def user_disconnected(self, event):
-        """
-        Update the list of connected peers when a user leaves.
-        """
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "type": "user_disconnected",
-                    "user_id": event["user_id"],
-                }
-            )
-        )
