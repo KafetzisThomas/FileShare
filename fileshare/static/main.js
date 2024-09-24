@@ -19,23 +19,6 @@ socket.onmessage = function (e) {
         document.getElementById('myUserId').innerHTML = myUserId;
     }
 
-    // Populate the list of already connected users (sent when a new user connects)
-    if (data.type === 'connected_users') {
-        data.users.forEach(userId => {
-            addUserOption(userId);
-        });
-    }
-
-    // Add a newly connected user to the dropdown list, excluding the current user
-    if (data.type === 'user_connected' && data.user_id !== myUserId) {
-        addUserOption(data.user_id);
-    }
-
-    // Remove a disconnected user from the dropdown list
-    if (data.type === 'user_disconnected') {
-        removeUserOption(data.user_id);
-    }
-
     // Handle form submission (sending files)
     if (data.type === 'file_offer') {
         let agree = confirm(`User ${data.sender_id} is sending a file: ${data.file_name}. Do you want to download it?`);
@@ -51,7 +34,7 @@ form.addEventListener('submit', (e) => {
 
     let fileInput = document.getElementById('fileInput');
     let file = fileInput.files[0];
-    let targetUserId = document.getElementById('userSelect').value;
+    let targetUserId = document.getElementById('userInput').value;
 
     let reader = new FileReader();
     reader.onload = function (event) {
@@ -70,26 +53,6 @@ form.addEventListener('submit', (e) => {
     reader.readAsDataURL(file);  // Convert to base64
     form.reset();
 });
-
-function addUserOption(userId) {
-    let userSelect = document.getElementById('userSelect');
-    let option = document.createElement('option');
-    option.value = userId;
-    option.text = `User: ${userId}`;
-    userSelect.appendChild(option);
-}
-
-function removeUserOption(userId) {
-    let userSelect = document.getElementById('userSelect');
-    let options = userSelect.options;
-
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].value === userId) {
-            userSelect.remove(i);
-            break;
-        }
-    }
-}
 
 function downloadFile(fileName, fileData) {
     // Creates an invisible link, sets its href to the base64-encoded file data,
