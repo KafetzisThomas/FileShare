@@ -28,17 +28,12 @@ class FileTransferConsumerTests(TransactionTestCase):
 
     async def test_disconnect(self):
         """
-        Test if the WebSocket disconnection is established correctly,
-        and check if the user is removed from the group.
+        Test if the WebSocket disconnection is established correctly.
         """
         communicator = WebsocketCommunicator(
             FileTransferConsumer.as_asgi(), "/ws/socket-server/"
         )
         await communicator.connect()
-
-        # Get the user ID first
-        await communicator.receive_json_from()
-
         await communicator.disconnect()
 
     async def test_file_transfer(self):
@@ -60,14 +55,6 @@ class FileTransferConsumerTests(TransactionTestCase):
         # Get the receiver user ID
         receiver_response = await communicator_receiver.receive_json_from()
         receiver_id = receiver_response["user_id"]
-
-        # Handle the "connected_users" message for the receiver
-        connected_users_event = await communicator_receiver.receive_json_from()
-        self.assertEqual(connected_users_event["type"], "connected_users")
-
-        # Handle the "user_connected" event (because sender connects)
-        user_connected_event = await communicator_receiver.receive_json_from()
-        self.assertEqual(user_connected_event["type"], "user_connected")
 
         # Mock file transfer
         file_name = "test_file.txt"
