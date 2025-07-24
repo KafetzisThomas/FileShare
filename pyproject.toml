@@ -26,7 +26,7 @@ dependencies = [
     "python-dotenv==1.0.1",
     "service-identity==24.1.0",
     "sqlparse==0.5.1",
-    "tomli==2.0.1",
+    "tomli==2.2.1",
     "twisted==24.7.0",
     "txaio==23.1.1",
     "typing-extensions==4.12.2",
