@@ -4,11 +4,11 @@ requires-python = ">=3.12"
 
 [[package]]
 name = "asgiref"
-version = "3.8.1"
+version = "3.9.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/29/38/b3395cc9ad1b56d2ddac9970bc8f4141312dbaec28bc7c218b0dfafd0f42/asgiref-3.8.1.tar.gz", hash = "sha256:c343bd80a0bec947a9860adb4c432ffa7db769836c64238fc34bdc3fec84d590", size = 35186, upload-time = "2024-03-22T14:39:36.863Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/90/61/0aa957eec22ff70b830b22ff91f825e70e1ef732c06666a805730f28b36b/asgiref-3.9.1.tar.gz", hash = "sha256:a5ab6582236218e5ef1648f242fd9f10626cfd4de8dc377db215d5d5098e3142", size = 36870, upload-time = "2025-07-08T09:07:43.344Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/39/e3/893e8757be2612e6c266d9bb58ad2e3651524b5b40cf56761e985a28b13e/asgiref-3.8.1-py3-none-any.whl", hash = "sha256:3e1e3ecc849832fe52ccf2cb6686b7a55f82bb1d6aee72a58826471390335e47", size = 23828, upload-time = "2024-03-22T14:39:34.521Z" },
+    { url = "https://files.pythonhosted.org/packages/7c/3c/0464dcada90d5da0e71018c04a140ad6349558afb30b3051b4264cc5b965/asgiref-3.9.1-py3-none-any.whl", hash = "sha256:f3bba7092a48005b5f5bacd747d36ee4a5a61f4a269a6df590b43144355ebd2c", size = 23790, upload-time = "2025-07-08T09:07:41.548Z" },
 ]
 
 [[package]]
@@ -158,14 +158,14 @@ wheels = [
 
 [[package]]
 name = "django-bootstrap5"
-version = "24.3"
+version = "25.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/64/ef/c37f1c2f5a40919217251ad6b2c825bfcec0e8ed5024b5c6df874cbc8caf/django_bootstrap5-24.3.tar.gz", hash = "sha256:ca5ec5568fc2a3fc239f0cb8ce41a7df3802b8c4af930d7f64451784ec7ddc16", size = 54344, upload-time = "2024-09-17T14:36:35.974Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/37/e3/1a52b8a5d2d85cbade624ec0de29a27b8a47df8859cb65e8425c3d4589df/django_bootstrap5-25.1.tar.gz", hash = "sha256:e81c77eb710356f94e426a51f4f469890d5720f5e7e53d650f4405d4cc94da04", size = 122024, upload-time = "2025-03-01T10:29:59.514Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e8/11/e5ab1d37bae5bd4e10e240c99601f450db618f6d370d75e742f9104778b9/django_bootstrap5-24.3-py3-none-any.whl", hash = "sha256:98f7916f9f7f9c34dfe157f7c062a28ebf6d17ff95307bef260ba794ba34e2a0", size = 26321, upload-time = "2024-09-17T14:36:34.299Z" },
+    { url = "https://files.pythonhosted.org/packages/49/6b/e28da7dd51d94f00975ab9db3ceda8ea7cfac6b92b2323fc4db7871534d4/django_bootstrap5-25.1-py3-none-any.whl", hash = "sha256:964ad2d970d0495b030b86f31b33033dfdfe839a67b32ea599fa02eb39988ae7", size = 26404, upload-time = "2025-03-01T10:29:57.281Z" },
 ]
 
 [[package]]
@@ -203,7 +203,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "asgiref", specifier = "==3.8.1" },
+    { name = "asgiref", specifier = "==3.9.1" },
     { name = "attrs", specifier = "==24.2.0" },
     { name = "autobahn", specifier = "==24.4.2" },
     { name = "automat", specifier = "==24.8.1" },
@@ -213,21 +213,21 @@ requires-dist = [
     { name = "cryptography", specifier = "==43.0.1" },
     { name = "daphne", specifier = "==4.1.2" },
     { name = "django", specifier = "==5.1.1" },
-    { name = "django-bootstrap5", specifier = "==24.3" },
+    { name = "django-bootstrap5", specifier = "==25.1" },
     { name = "hyperlink", specifier = "==21.0.0" },
     { name = "idna", specifier = "==3.10" },
     { name = "incremental", specifier = "==24.7.2" },
     { name = "pyasn1", specifier = "==0.6.1" },
     { name = "pyasn1-modules", specifier = "==0.4.1" },
     { name = "pycparser", specifier = "==2.22" },
-    { name = "pyopenssl", specifier = "==24.2.1" },
+    { name = "pyopenssl", specifier = "==25.1.0" },
     { name = "python-dotenv", specifier = "==1.0.1" },
     { name = "service-identity", specifier = "==24.1.0" },
     { name = "sqlparse", specifier = "==0.5.1" },
     { name = "tomli", specifier = "==2.2.1" },
-    { name = "twisted", specifier = "==24.7.0" },
+    { name = "twisted", specifier = "==25.5.0" },
     { name = "txaio", specifier = "==23.1.1" },
-    { name = "typing-extensions", specifier = "==4.12.2" },
+    { name = "typing-extensions", specifier = "==4.14.1" },
     { name = "zope-interface", specifier = "==7.0.3" },
 ]
 
@@ -296,14 +296,15 @@ wheels = [
 
 [[package]]
 name = "pyopenssl"
-version = "24.2.1"
+version = "25.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5d/70/ff56a63248562e77c0c8ee4aefc3224258f1856977e0c1472672b62dadb8/pyopenssl-24.2.1.tar.gz", hash = "sha256:4247f0dbe3748d560dcbb2ff3ea01af0f9a1a001ef5f7c4c647956ed8cbf0e95", size = 184323, upload-time = "2024-07-20T17:26:31.252Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/04/8c/cd89ad05804f8e3c17dea8f178c3f40eeab5694c30e0c9f5bcd49f576fc3/pyopenssl-25.1.0.tar.gz", hash = "sha256:8d031884482e0c67ee92bf9a4d8cceb08d92aba7136432ffb0703c5280fc205b", size = 179937, upload-time = "2025-05-17T16:28:31.31Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d9/dd/e0aa7ebef5168c75b772eda64978c597a9129b46be17779054652a7999e4/pyOpenSSL-24.2.1-py3-none-any.whl", hash = "sha256:967d5719b12b243588573f39b0c677637145c7a1ffedcd495a487e58177fbb8d", size = 58390, upload-time = "2024-07-20T17:26:29.057Z" },
+    { url = "https://files.pythonhosted.org/packages/80/28/2659c02301b9500751f8d42f9a6632e1508aa5120de5e43042b8b30f8d5d/pyopenssl-25.1.0-py3-none-any.whl", hash = "sha256:2b11f239acc47ac2e5aca04fd7fa829800aeee22a2eb30d744572a157bd8a1ab", size = 56771, upload-time = "2025-05-17T16:28:29.197Z" },
 ]
 
 [[package]]
@@ -379,7 +380,7 @@ wheels = [
 
 [[package]]
 name = "twisted"
-version = "24.7.0"
+version = "25.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -390,9 +391,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "zope-interface" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8b/bf/f30eb89bcd14a21a36b4cd3d96658432d4c590af3c24bbe08ea77fa7bbbb/twisted-24.7.0.tar.gz", hash = "sha256:5a60147f044187a127ec7da96d170d49bcce50c6fd36f594e60f4587eff4d394", size = 3516844, upload-time = "2024-08-10T13:27:08.278Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/13/0f/82716ed849bf7ea4984c21385597c949944f0f9b428b5710f79d0afc084d/twisted-25.5.0.tar.gz", hash = "sha256:1deb272358cb6be1e3e8fc6f9c8b36f78eb0fa7c2233d2dbe11ec6fee04ea316", size = 3545725, upload-time = "2025-06-07T09:52:24.858Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/49/d2/7b3e869b983fbf29d770fc2893f8df7c1739c6ff03a2b926b4fc43e4263e/twisted-24.7.0-py3-none-any.whl", hash = "sha256:734832ef98108136e222b5230075b1079dad8a3fc5637319615619a7725b0c81", size = 3181556, upload-time = "2024-08-10T13:27:04.649Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/66/ab7efd8941f0bc7b2bd555b0f0471bff77df4c88e0cc31120c82737fec77/twisted-25.5.0-py3-none-any.whl", hash = "sha256:8559f654d01a54a8c3efe66d533d43f383531ebf8d81d9f9ab4769d91ca15df7", size = 3204767, upload-time = "2025-06-07T09:52:21.428Z" },
 ]
 
 [package.optional-dependencies]
@@ -413,11 +414,11 @@ wheels = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.12.2"
+version = "4.14.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/df/db/f35a00659bc03fec321ba8bce9420de607a1d37f8342eee1863174c69557/typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8", size = 85321, upload-time = "2024-06-07T18:52:15.995Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/98/5a/da40306b885cc8c09109dc2e1abd358d5684b1425678151cdaed4731c822/typing_extensions-4.14.1.tar.gz", hash = "sha256:38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36", size = 107673, upload-time = "2025-07-04T13:28:34.16Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d", size = 37438, upload-time = "2024-06-07T18:52:13.582Z" },
+    { url = "https://files.pythonhosted.org/packages/b5/00/d631e67a838026495268c2f6884f3711a15a9a2a96cd244fdaea53b823fb/typing_extensions-4.14.1-py3-none-any.whl", hash = "sha256:d1e1e3b58374dc93031d6eda2420a48ea44a36c2b4766a4fdeb3710755731d76", size = 43906, upload-time = "2025-07-04T13:28:32.743Z" },
 ]
 
 [[package]]
