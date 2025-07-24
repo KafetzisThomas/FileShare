@@ -29,6 +29,6 @@ dependencies = [
     "tomli==2.0.1",
     "twisted==25.5.0",
     "txaio==23.1.1",
-    "typing-extensions==4.12.2",
+    "typing-extensions==4.14.1",
     "zope-interface==7.0.3",
 ]
