@@ -6,9 +6,6 @@
         A P2P file transfer tool using Django Channels.<br>
         Written in Python/Django
     </p>
-    <a href="https://github.com/KafetzisThomas/FileShare/actions/workflows/tests.yml">
-        <img src = "https://github.com/KafetzisThomas/FileShare/actions/workflows/tests.yml/badge.svg" alt="Run Tests"/>
-    </a>
 </div>
 
 ---
