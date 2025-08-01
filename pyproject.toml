@@ -24,7 +24,7 @@ dependencies = [
     "pycparser==2.22",
     "python-dotenv==1.1.1",
     "pyopenssl==25.1.0",
-    "service-identity==24.1.0",
+    "service-identity==24.2.0",
     "sqlparse==0.5.3",
     "tomli==2.2.1",
     "twisted==25.5.0",
