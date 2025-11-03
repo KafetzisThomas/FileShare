@@ -17,7 +17,7 @@ dependencies = [
     "django==5.2.7",
     "django-bootstrap5==25.2",
     "hyperlink==21.0.0",
-    "idna==3.10",
+    "idna==3.11",
     "incremental==24.7.2",
     "pyasn1==0.6.1",
     "pyasn1-modules==0.4.2",
