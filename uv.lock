@@ -4,11 +4,11 @@ requires-python = ">=3.12"
 
 [[package]]
 name = "asgiref"
-version = "3.9.2"
+version = "3.11.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/7f/bf/0f3ecda32f1cb3bf1dca480aca08a7a8a3bdc4bed2343a103f30731565c9/asgiref-3.9.2.tar.gz", hash = "sha256:a0249afacb66688ef258ffe503528360443e2b9a8d8c4581b6ebefa58c841ef1", size = 36894, upload-time = "2025-09-23T15:00:55.136Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/b9/4db2509eabd14b4a8c71d1b24c8d5734c52b8560a7b1e1a8b56c8d25568b/asgiref-3.11.0.tar.gz", hash = "sha256:13acff32519542a1736223fb79a715acdebe24286d98e8b164a73085f40da2c4", size = 37969, upload-time = "2025-11-19T15:32:20.106Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c7/d1/69d02ce34caddb0a7ae088b84c356a625a93cd4ff57b2f97644c03fad905/asgiref-3.9.2-py3-none-any.whl", hash = "sha256:0b61526596219d70396548fc003635056856dba5d0d086f86476f10b33c75960", size = 23788, upload-time = "2025-09-23T15:00:53.627Z" },
+    { url = "https://files.pythonhosted.org/packages/91/be/317c2c55b8bbec407257d45f5c8d1b6867abc76d12043f2d3d58c538a4ea/asgiref-3.11.0-py3-none-any.whl", hash = "sha256:1db9021efadb0d9512ce8ffaf72fcef601c7b73a8807a1bb2ef143dc6b14846d", size = 24096, upload-time = "2025-11-19T15:32:19.004Z" },
 ]
 
 [[package]]
@@ -195,14 +195,14 @@ wheels = [
 
 [[package]]
 name = "django-bootstrap5"
-version = "25.2"
+version = "25.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/40/97/7c905896f8014978e982f5cfe3c3a56131cf5042d8983f33b98b196ef119/django_bootstrap5-25.2.tar.gz", hash = "sha256:abcfcd543efc19aaab4456a12b566507f684cfda98effc5dd3ad5167ba05c7b3", size = 129765, upload-time = "2025-07-30T12:33:30.216Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/60/73/764367acc94f22b68f1ff8d39be511afa0315fd83299abdd6542bdeffdb4/django_bootstrap5-25.3.tar.gz", hash = "sha256:cc36f1a19d3200c0f5628c703320edb5c4e39e19bf17607fadf58ddb11828912", size = 49738, upload-time = "2025-11-14T13:00:13.316Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/e4/becdbbb273a4176029df49999d78169600000747ed7b5118dab13fe49d99/django_bootstrap5-25.2-py3-none-any.whl", hash = "sha256:9418969fa5932729dc1addb1b70f13c9312a522b15033219ac3cbc5728eb8937", size = 26740, upload-time = "2025-07-30T12:33:28.581Z" },
+    { url = "https://files.pythonhosted.org/packages/56/0d/ae17205ff3f9e04deb364b037c506ff94166c23b0a7424208d39174c84f9/django_bootstrap5-25.3-py3-none-any.whl", hash = "sha256:3d381a5329a1439ac3237456c28cc8170c62b4c56ad3564d57876ffc3d4c5e78", size = 26772, upload-time = "2025-11-14T13:00:11.709Z" },
 ]
 
 [[package]]
@@ -240,8 +240,8 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "asgiref", specifier = "==3.9.2" },
     { name = "attrs", specifier = "==25.4.0" },
+    { name = "asgiref", specifier = "==3.11.0" },
     { name = "autobahn", specifier = "==25.10.2" },
     { name = "automat", specifier = "==25.4.16" },
     { name = "cffi", specifier = "==2.0.0" },
@@ -250,7 +250,7 @@ requires-dist = [
     { name = "cryptography", specifier = "==45.0.6" },
     { name = "daphne", specifier = "==4.2.1" },
     { name = "django", specifier = "==5.2.7" },
-    { name = "django-bootstrap5", specifier = "==25.2" },
+    { name = "django-bootstrap5", specifier = "==25.3" },
     { name = "hyperlink", specifier = "==21.0.0" },
     { name = "idna", specifier = "==3.11" },
     { name = "incremental", specifier = "==24.7.2" },

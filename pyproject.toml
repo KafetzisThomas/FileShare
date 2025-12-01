@@ -5,8 +5,8 @@ description = "A P2P file transfer tool using Django Channels."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "asgiref==3.9.2",
     "attrs==25.4.0",
+    "asgiref==3.11.0",
     "autobahn==25.10.2",
     "automat==25.4.16",
     "cffi==2.0.0",
@@ -15,7 +15,7 @@ dependencies = [
     "cryptography==45.0.6",
     "daphne==4.2.1",
     "django==5.2.7",
-    "django-bootstrap5==25.2",
+    "django-bootstrap5==25.3",
     "hyperlink==21.0.0",
     "idna==3.11",
     "incremental==24.7.2",
