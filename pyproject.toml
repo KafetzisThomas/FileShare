@@ -10,7 +10,7 @@ dependencies = [
     "autobahn==25.10.2",
     "automat==25.4.16",
     "cffi==2.0.0",
-    "channels==4.3.1",
+    "channels==4.3.2",
     "constantly==23.10.4",
     "cryptography==45.0.6",
     "daphne==4.2.1",
