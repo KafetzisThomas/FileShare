@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "attrs==25.4.0",
-    "asgiref==3.11.0",
+    "asgiref==3.11.1",
     "autobahn==25.12.2",
     "automat==25.4.16",
     "cffi==2.0.0",
