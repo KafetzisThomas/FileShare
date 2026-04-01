@@ -14,7 +14,7 @@ dependencies = [
     "constantly==23.10.4",
     "cryptography==45.0.6",
     "daphne==4.2.1",
-    "django==6.0.2",
+    "django==6.0.3",
     "django-bootstrap5==26.2",
     "hyperlink==21.0.0",
     "idna==3.11",
