@@ -1,21 +1,12 @@
 from django.test import TransactionTestCase
 from channels.testing import WebsocketCommunicator
-from ..consumers import FileTransferConsumer
+from ..consumers import FileTransfer
 
 
-class FileTransferConsumerTests(TransactionTestCase):
-    """
-    Test suite for the FileTransferConsumer class.
-    """
+class FileTransferTests(TransactionTestCase):
 
     async def test_connect(self):
-        """
-        Test if the WebSocket connection is established correctly,
-        and a unique user ID is assigned and sent back.
-        """
-        communicator = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         connected, _ = await communicator.connect()
         self.assertTrue(connected)
 
@@ -27,29 +18,17 @@ class FileTransferConsumerTests(TransactionTestCase):
         await communicator.disconnect()
 
     async def test_disconnect(self):
-        """
-        Test if the WebSocket disconnection is established correctly.
-        """
-        communicator = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         await communicator.connect()
         await communicator.disconnect()
 
     async def test_file_transfer(self):
-        """
-        Test the file transfer functionality with encryption and decryption.
-        """
         # Create communicator for the sender
-        communicator_sender = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator_sender = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         await communicator_sender.connect()
 
         # Create communicator for the receiver
-        communicator_receiver = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator_receiver = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         await communicator_receiver.connect()
 
         # Get the receiver user ID
