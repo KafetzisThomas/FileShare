@@ -18,10 +18,10 @@ socket.onmessage = function (e) {
         document.getElementById('myUserId').innerHTML = myUserId;
     }
 
-    if (data.type === 'file_offer') {
-        let agree = confirm(`User ${data.sender_id} is sending a file: ${data.file_name}. Do you want to download it?`);
+    if (data.type === 'file') {
+        let agree = confirm(`User ${data.sender_id} is sending a file: ${data.filename}. Do you want to download it?`);
         if (agree) {
-            downloadFile(data.file_name, data.file);
+            downloadFile(data.filename, data.file);
         }
     }
 };
@@ -42,7 +42,7 @@ form.addEventListener('submit', (e) => {
         // console.log("Encoded: " + fileData.substring(0, 10));
 
         socket.send(JSON.stringify({
-            'file_name': file.name,
+            'filename': file.name,
             'file': fileData,
             'target_user_id': targetUserId
         }));
