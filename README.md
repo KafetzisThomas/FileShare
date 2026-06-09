@@ -61,17 +61,17 @@ uv run manage.py test
 
 ## Demo Image
 
-![fileshare](https://github.com/user-attachments/assets/df026073-42c8-43f9-92ce-b57b0e9a01b6)
+![demo image](/assets/demo_image.png)
 
 ## Demo Videos
 
-### User 1
+### user 1 -> user 2
 
-<https://github.com/user-attachments/assets/10552c38-0d08-4040-9fb5-e9093528b5ef>
+![user1_to_user2](/assets/user1_to_user2.mp4)
 
-### User 2
+### user 2 -> user 1
 
-<https://github.com/user-attachments/assets/f07322d1-35b1-4569-b496-c61578b32e1b>
+![user2_to_user1](/assets/user2_to_user1.mp4)
 
 ## Contributing Guidelines
 
