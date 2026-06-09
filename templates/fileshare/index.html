@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FileShare - Send and receive files over the network</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+</head>
+<body>
+    <main role="main" class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 py-5">
+        <div class="form-section w-100">
+            <h1 class="text-dark text-center fw-bold mb-4">FileShare</h1>
+            <div class="mb-4 text-center">
+                <p class="text-muted mb-0">Your Unique ID</p>
+                <span id="myUserId" class="badge bg-light text-dark border fs-6 px-3 py-2 mt-1">Generating...</span>
+            </div>
+
+            <form id="form">
+                <div class="mb-4">
+                    <label for="fileInput" class="form-label fw-medium">Choose a file</label>
+                    <input type="file" id="fileInput" class="form-control" name="file" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="userInput" class="form-label fw-medium">Recipient's ID</label>
+                    <input type="text" id="userInput" class="form-control" name="user" placeholder="Enter unique ID" required />
+                </div>
+                <button type="submit" class="btn btn-dark w-100 py-2 fw-medium">Send File</button>
+            </form>
+
+            <div class="file-info mt-4 text-center">
+                <small class="text-muted">Select a file and securely send it to any connected user.</small>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer text-dark py-4 mt-auto">
+        <div class="container">
+            <hr class="opacity-10 mb-3">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-12 col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-muted small">&copy; 2026 KafetzisThomas</p>
+                </div>
+                <div class="col-12 col-md-6 text-center text-md-end">
+                    <a href="https://github.com/KafetzisThomas/FileShare" target="_blank" class="text-dark fs-5">
+                        <i class="bi bi-github opacity-75 hover-opacity-100 transition"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'main.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

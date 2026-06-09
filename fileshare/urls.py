@@ -1,5 +1,3 @@
-"""Defines URL patterns for fileshare"""
-
 from django.urls import path
 from . import views
 

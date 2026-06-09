@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+body {
+  font-family: 'Inria Sans', sans-serif;
+  background-color: #fafafa;
+  color: #212529;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.form-section {
+  max-width: 440px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.03);
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 0.75rem 1rem;
+  background-color: #fdfdfd;
+}
+
+.form-control:focus {
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(33, 37, 41, 0.08);
+  border-color: #212529;
+}
+
+.btn-dark {
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-dark:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(33, 37, 41, 0.15);
+}
+
+.transition {
+  transition: opacity 0.2s ease;
+}
+
+.hover-opacity-100:hover {
+  opacity: 1 !important;
+}

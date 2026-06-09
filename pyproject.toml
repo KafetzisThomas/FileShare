@@ -1,7 +1,7 @@
 [project]
 name = "fileshare"
 version = "0.1.0"
-description = "A P2P file transfer tool using Django Channels."
+description = "Send and receive files over the network."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -15,7 +15,6 @@ dependencies = [
     "cryptography==45.0.6",
     "daphne==4.2.1",
     "django==6.0.5",
-    "django-bootstrap5==26.2",
     "hyperlink==21.0.0",
     "idna==3.17",
     "incremental==24.11.0",

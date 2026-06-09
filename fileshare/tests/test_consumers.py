@@ -1,25 +1,15 @@
 from django.test import TransactionTestCase
 from channels.testing import WebsocketCommunicator
-from ..consumers import FileTransferConsumer
+from ..consumers import FileTransfer
 
 
-class FileTransferConsumerTests(TransactionTestCase):
-    """
-    Test suite for the FileTransferConsumer class.
-    """
+class FileTransferTests(TransactionTestCase):
 
     async def test_connect(self):
-        """
-        Test if the WebSocket connection is established correctly,
-        and a unique user ID is assigned and sent back.
-        """
-        communicator = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         connected, _ = await communicator.connect()
         self.assertTrue(connected)
 
-        # Receive the user ID from the server
         response = await communicator.receive_json_from()
         self.assertEqual(response["type"], "user_id")
         self.assertIn("user_id", response)
@@ -27,61 +17,191 @@ class FileTransferConsumerTests(TransactionTestCase):
         await communicator.disconnect()
 
     async def test_disconnect(self):
-        """
-        Test if the WebSocket disconnection is established correctly.
-        """
-        communicator = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         await communicator.connect()
         await communicator.disconnect()
 
     async def test_file_transfer(self):
-        """
-        Test the file transfer functionality with encryption and decryption.
-        """
-        # Create communicator for the sender
-        communicator_sender = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator_sender = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         await communicator_sender.connect()
 
-        # Create communicator for the receiver
-        communicator_receiver = WebsocketCommunicator(
-            FileTransferConsumer.as_asgi(), "/ws/socket-server/"
-        )
+        communicator_receiver = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
         await communicator_receiver.connect()
 
-        # Get the receiver user ID
         receiver_response = await communicator_receiver.receive_json_from()
         receiver_id = receiver_response["user_id"]
 
-        # Mock file transfer
-        file_name = "test_file.txt"
-        file_content = "Hello, World!"  # The original file content
+        filename = "test.txt"
+        file = "test content"
 
-        # Send the file from sender to receiver
         await communicator_sender.send_json_to(
             {
-                "type": "file_offer",
+                "type": "file",
                 "target_user_id": receiver_id,
-                "file_name": file_name,
-                "file": file_content,
+                "filename": filename,
+                "file": file,
             }
         )
 
-        # Receive the actual file on the receiver's side
         receiver_event = await communicator_receiver.receive_json_from()
+        self.assertEqual(receiver_event["type"], "file")
+        self.assertEqual(receiver_event["filename"], filename)
+        self.assertEqual(receiver_event["file"], file)
 
-        # Check that the file offer event was received
-        self.assertEqual(receiver_event["type"], "file_offer")
-        self.assertEqual(receiver_event["file_name"], file_name)
-
-        # Encryption check: The receiver should get the decrypted content
-        self.assertEqual(
-            receiver_event["file"], file_content
-        )  # Decrypted content matches original
-
-        # Disconnect both communicators
         await communicator_sender.disconnect()
         await communicator_receiver.disconnect()
+
+    async def test_send_to_nonexistent_user(self):
+        communicator = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        await communicator.connect()
+        await communicator.receive_json_from()
+
+        await communicator.send_json_to(
+            {
+                "type": "file",
+                "target_user_id": "nonexistent",
+                "filename": "test.txt",
+                "file": "test content",
+            }
+        )
+
+        self.assertTrue(await communicator.receive_nothing(timeout=0.5))
+
+        await communicator.disconnect()
+
+    async def test_receive_malformed_data_missing_keys(self):
+        communicator = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        await communicator.connect()
+
+        await communicator.receive_json_from()
+
+        # missing file key
+        await communicator.send_json_to(
+            {
+                "target_user_id": "some_id",
+            }
+        )
+        self.assertTrue(await communicator.receive_nothing(timeout=0.5))
+
+        # missing target_user_id key
+        await communicator.send_json_to(
+            {
+                "file": "test content",
+            }
+        )
+        self.assertTrue(await communicator.receive_nothing(timeout=0.5))
+
+        # empty data
+        await communicator.send_json_to({})
+        self.assertTrue(await communicator.receive_nothing(timeout=0.5))
+
+        await communicator.disconnect()
+
+    async def test_sender_does_not_receive_own_file(self):
+        communicator_sender = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        await communicator_sender.connect()
+
+        communicator_receiver = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        await communicator_receiver.connect()
+
+        await communicator_sender.receive_json_from()
+        receiver_response = await communicator_receiver.receive_json_from()
+        receiver_id = receiver_response["user_id"]
+
+        await communicator_sender.send_json_to(
+            {
+                "type": "file",
+                "target_user_id": receiver_id,
+                "filename": "test.txt",
+                "file": "test content",
+            }
+        )
+
+        receiver_event = await communicator_receiver.receive_json_from()
+        self.assertEqual(receiver_event["type"], "file")
+        self.assertTrue(await communicator_sender.receive_nothing(timeout=0.5))
+
+        await communicator_sender.disconnect()
+        await communicator_receiver.disconnect()
+
+    async def test_sender_id_in_received_event(self):
+        communicator_sender = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        await communicator_sender.connect()
+
+        communicator_receiver = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        await communicator_receiver.connect()
+
+        sender_response = await communicator_sender.receive_json_from()
+        sender_id = sender_response["user_id"]
+
+        receiver_response = await communicator_receiver.receive_json_from()
+        receiver_id = receiver_response["user_id"]
+
+        await communicator_sender.send_json_to(
+            {
+                "type": "file",
+                "target_user_id": receiver_id,
+                "filename": "test.txt",
+                "file": "test content",
+            }
+        )
+
+        receiver_event = await communicator_receiver.receive_json_from()
+        self.assertEqual(receiver_event["sender_id"], sender_id)
+
+        await communicator_sender.disconnect()
+        await communicator_receiver.disconnect()
+
+    async def test_multiple_concurrent_transfers(self):
+        communicator_a = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        communicator_b = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+        communicator_c = WebsocketCommunicator(FileTransfer.as_asgi(), "/ws/socket-server/")
+
+        await communicator_a.connect()
+        await communicator_b.connect()
+        await communicator_c.connect()
+
+        await communicator_a.receive_json_from()
+        response_b = await communicator_b.receive_json_from()
+        response_c = await communicator_c.receive_json_from()
+
+        id_b = response_b["user_id"]
+        id_c = response_c["user_id"]
+
+        # a -> b
+        await communicator_a.send_json_to(
+            {
+                "type": "file",
+                "target_user_id": id_b,
+                "filename": "test_b.txt",
+                "file": "test content",
+            }
+        )
+
+        # a -> c
+        await communicator_a.send_json_to(
+            {
+                "type": "file",
+                "target_user_id": id_c,
+                "filename": "test_c.txt",
+                "file": "test content",
+            }
+        )
+
+        # b should receive their file
+        event_b = await communicator_b.receive_json_from()
+        self.assertEqual(event_b["filename"], "test_b.txt")
+        self.assertEqual(event_b["file"], "test content")
+
+        # c should receive their file
+        event_c = await communicator_c.receive_json_from()
+        self.assertEqual(event_c["filename"], "test_c.txt")
+        self.assertEqual(event_c["file"], "test content")
+
+        # b should not receive c's file and vice versa
+        self.assertTrue(await communicator_b.receive_nothing(timeout=0.5))
+        self.assertTrue(await communicator_c.receive_nothing(timeout=0.5))
+
+        await communicator_a.disconnect()
+        await communicator_b.disconnect()
+        await communicator_c.disconnect()
