@@ -67,11 +67,11 @@ uv run manage.py test
 
 ### user 1 -> user 2
 
-![user1_to_user2](/assets/user1_to_user2.mp4)
+https://github.com/user-attachments/assets/ccb0f6f7-7187-4865-a823-48a9f5ce10b4
 
 ### user 2 -> user 1
 
-![user2_to_user1](/assets/user2_to_user1.mp4)
+https://github.com/user-attachments/assets/c11a6441-7a58-4345-9029-e542c792675d
 
 ## Contributing Guidelines
 
