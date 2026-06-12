@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # my apps
-    "fileshare",
+    "transfer",
     # third party apps
     "channels",
     "daphne",

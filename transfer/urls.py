@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = "fileshare"
+app_name = "transfer"
 urlpatterns = [
     path("", views.index, name="index"),
 ]

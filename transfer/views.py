@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, "fileshare/index.html")
+    return render(request, "transfer/index.html")
