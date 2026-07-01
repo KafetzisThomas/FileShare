@@ -142,3 +142,6 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")
+
+if DEBUG:
+    ENCRYPTION_KEY = b"eAF0HdHLqv6aMNbgBEqrIERnDlOX0HNz4_q1Aq8lzpc="
