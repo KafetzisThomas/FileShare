@@ -16,7 +16,7 @@ dependencies = [
     "daphne==4.2.1",
     "django==6.0.6",
     "hyperlink==21.0.0",
-    "idna==3.17",
+    "idna==3.18",
     "incremental==24.11.0",
     "pyasn1==0.6.3",
     "pyasn1-modules==0.4.2",
