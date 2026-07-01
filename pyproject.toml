@@ -13,7 +13,7 @@ dependencies = [
     "channels==4.3.2",
     "constantly==23.10.4",
     "cryptography==45.0.6",
-    "daphne==4.2.1",
+    "daphne==4.2.2",
     "django==6.0.6",
     "hyperlink==21.0.0",
     "idna==3.18",
