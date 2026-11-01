@@ -9,5 +9,5 @@ dependencies = [
     "cryptography==45.0.6",
     "daphne==4.2.3",
     "django==6.1.1",
-    "python-dotenv==1.2.3",
+    "python-dotenv==1.2.4",
 ]
