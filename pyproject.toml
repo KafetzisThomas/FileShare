@@ -8,6 +8,6 @@ dependencies = [
     "channels==4.3.2",
     "cryptography==50.0.2",
     "daphne==4.2.3",
-    "django==6.1.1",
+    "django==6.1.2",
     "python-dotenv==1.2.4",
 ]
